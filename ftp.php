@@ -45,7 +45,7 @@ if (empty($hostname)) {
 }
 
 // Connect to FTP
-$conn = @ftp_connect($hostname, 21, 10);
+$conn = @ftp_connect($hostname);
 if (!$conn) {
     http_response_code(500);
     echo json_encode(['error' => 'Failed to connect to FTP server: ' . $hostname]);
