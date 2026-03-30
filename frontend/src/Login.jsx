@@ -6,6 +6,7 @@ export default function Login({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [hostname, setHostname] = useState('');
+  const [port, setPort] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -13,7 +14,7 @@ export default function Login({ onLogin }) {
     e.preventDefault();
     setError('');
     setLoading(true);
-    const credentials = { username, password, hostname: hostname || '' };
+    const credentials = { username, password, hostname: hostname || '', port: port || '' };
     try {
       await testConnection(credentials);
       onLogin(credentials);
@@ -63,6 +64,18 @@ export default function Login({ onLogin }) {
             value={hostname}
             onChange={(e) => setHostname(e.target.value)}
             placeholder="ftp.example.com"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>ポート番号（オプション）</label>
+          <input
+            type="number"
+            value={port}
+            onChange={(e) => setPort(e.target.value)}
+            placeholder="21"
+            min="1"
+            max="65535"
           />
         </div>
 

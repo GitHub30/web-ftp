@@ -14,6 +14,9 @@ function buildUrl(params, extra = {}) {
   if (params.hostname) {
     url.searchParams.set('hostname', params.hostname);
   }
+  if (params.port) {
+    url.searchParams.set('port', params.port);
+  }
   Object.entries(extra).forEach(([k, v]) => {
     url.searchParams.set(k, v);
   });

@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 $username = $_GET['username'] ?? '';
 $password = $_GET['password'] ?? '';
 $hostname = $_GET['hostname'] ?? '';
+$port = isset($_GET['port']) && $_GET['port'] !== '' ? (int)$_GET['port'] : 21;
 
 if (empty($username) || empty($password)) {
     http_response_code(400);
@@ -45,10 +46,10 @@ if (empty($hostname)) {
 }
 
 // Connect to FTP
-$conn = @ftp_connect($hostname);
+$conn = @ftp_connect($hostname, $port);
 if (!$conn) {
     http_response_code(500);
-    echo json_encode(['error' => 'Failed to connect to FTP server: ' . $hostname]);
+    echo json_encode(['error' => 'Failed to connect to FTP server: ' . $hostname . ':' . $port]);
     exit;
 }
 
