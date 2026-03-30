@@ -8,8 +8,9 @@ function getCredentialsFromUrl() {
   const username = params.get('username');
   const password = params.get('password');
   const hostname = params.get('hostname') || '';
+  const port = params.get('port') || '';
   if (username && password) {
-    return { username, password, hostname };
+    return { username, password, hostname, port };
   }
   return null;
 }
@@ -23,6 +24,11 @@ function setCredentialsInUrl(credentials) {
   } else {
     url.searchParams.delete('hostname');
   }
+  if (credentials.port) {
+    url.searchParams.set('port', credentials.port);
+  } else {
+    url.searchParams.delete('port');
+  }
   window.history.replaceState({}, '', url);
 }
 
@@ -31,6 +37,7 @@ function clearCredentialsFromUrl() {
   url.searchParams.delete('username');
   url.searchParams.delete('password');
   url.searchParams.delete('hostname');
+  url.searchParams.delete('port');
   url.searchParams.delete('path');
   window.history.replaceState({}, '', url);
 }
